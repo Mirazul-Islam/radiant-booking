@@ -7,27 +7,33 @@ import 'react-clock/dist/Clock.css';
 
 
 const BookingForm = () => {
+    const [booking, setBooking] = useState(false);
     const [startDate, setStartDate] = useState();
     const [value, onChange] = useState();
+
+    const handleFormSubmit = ((e) => {
+        e.preventDefault();
+        setBooking(true);
+    })
     return (
         <div className='pt-5'>
-            <div  className='container'>
-            <h1 className='mt-3'>Create Booking</h1>
-                <form>
+            <div className='container'>
+                <h1 className='mt-3'>Create Booking</h1>
+                <form onSubmit={handleFormSubmit}>
                     <div className="row mb-3">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Name</label>
-                            <input type="name" class="form-control" id="inputPassword4" placeholder="Name" />
+                            <input type="name" class="form-control" id="inputPassword4" placeholder="Name" required/>
                         </div>
                         <div className="form-group col-md-6">
                             <label for="inputEmail4">Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email" />
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required/>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="form-group col">
                             <label for="inputState">Packages</label>
-                            <select id="inputState" class="form-control">
+                            <select id="inputState" class="form-control" required>
                                 <option selected>Choose...</option>
                                 <option>Deep Cleaning</option>
                                 <option>Window Wiping</option>
@@ -41,29 +47,29 @@ const BookingForm = () => {
                     <div className="row mb-3">
                         <div className="form-group col-md-6">
                             <label for="inputEmail4">Date</label>
-                            <DatePicker className="form-control" selected={startDate} onChange={(date) => setStartDate(date)} />
+                            <DatePicker className="form-control" selected={startDate} onChange={(date) => setStartDate(date)} required/>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Time</label>
-                            <TimePicker className="form-control time-b" onChange={onChange} value={value} />
+                            <TimePicker className="form-control time-b" onChange={onChange} value={value} required/>
                         </div>
                     </div>
                     <div class="form-group mb-3">
                         <label for="inputAddress">Address</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"required />
                     </div>
                     <div class="form-group mb-3">
                         <label for="inputAddress2">Address 2</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" required/>
                     </div>
                     <div class="row mb-3">
                         <div class="form-group col-md-6">
                             <label for="inputCity">City</label>
-                            <input type="text" class="form-control" id="inputCity" />
+                            <input type="text" class="form-control" id="inputCity" required/>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="inputState">Province/Territory</label>
-                            <select id="inputState" class="form-control">
+                            <select id="inputState" class="form-control" required>
                                 <option selected>Choose...</option>
                                 <option>Nova Scotia</option>
                                 <option>Newfoundland and Labrador</option>
@@ -82,12 +88,12 @@ const BookingForm = () => {
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputZip">Postal Code</label>
-                            <input type="text" class="form-control" id="inputZip" />
+                            <input type="text" class="form-control" id="inputZip" required/>
                         </div>
                     </div>
                     <div class="form-group mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck" />
+                            <input class="form-check-input" type="checkbox" id="gridCheck" required />
                             <label class="form-check-label" for="gridCheck">
                                 I Agree to Terms and Conditions
                             </label>
@@ -98,7 +104,14 @@ const BookingForm = () => {
                         <button type="submit" class="btn btn-primary custom-btn">Confirm Booking</button>
                     </div>
                 </form>
-                </div>
+                {booking ?
+                    <div class="alert alert-success" role="alert">
+                        Booking Confirmed. Check Your Email For Further Instruction On Payment.
+                    </div>
+                    :
+                    null
+                }
+            </div>
         </div>
     );
 }
